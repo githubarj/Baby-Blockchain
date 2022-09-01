@@ -28,3 +28,4 @@ It is an implementation of my own minimal version of the blockchain (without dec
  This will be updated as I continue to work on the project. 
 
 
+
