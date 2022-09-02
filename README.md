@@ -18,11 +18,13 @@ It is an implementation of my own minimal version of the blockchain (without dec
     - You might need to install it with npm
 
 ## Features
- - A blockchain
+ - Blocks
+ - A blockchain 
  - Hashing
- - Transactions
+ - Transactions and transaction creation
  - Accounts
  - Signatures
+ - Front end for interaction
 
  ## Interaction
  This will be updated as I continue to work on the project. 

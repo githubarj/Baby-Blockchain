@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "@types/crypto-js": "^4.1.1",
-    "crypto-js": "^4.1.1"
+    "crypto-js": "^4.1.1",
+    "elliptic": "^6.5.4"
   },
-  "type" : "module"
+  "type": "module"
 }
