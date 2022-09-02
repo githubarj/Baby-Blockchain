@@ -1,7 +1,7 @@
 export default class Transaction {
-  constructor(fromAddress, toAdress, amount) {
+  constructor(fromAddress, toAddress, amount) {
     this.fromAddress = fromAddress;
-    this.toAdress = toAdress;
+    this.toAddress = toAddress;
     this.amount = amount;
   }
 }

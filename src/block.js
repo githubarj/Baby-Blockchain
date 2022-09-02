@@ -12,9 +12,8 @@ export default class Block {
   //SHA 256 hashing to create a hash
   calculateHash() {
     return SHA256(
-      this.index +
         this.timestamp +
-        JSON.stringify(this.data) +
+        JSON.stringify(this.transactions) +
         this.previousHash +
         this.nonce
     ).toString();

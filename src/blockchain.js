@@ -6,7 +6,7 @@ export default class Blockchain {
     //initialising our blockchain
     this.chain = [this.createGenesisBlock()]; //a blockchain will be an array of blocks
     this.difficulty = 2; //setting the number of 0s required
-    this.pendingTransactions = []
+    this.pendingTransactions = [];
     this.miningReward = 100; //reward for mining a block (amount to be received)
   }
 
@@ -35,18 +35,46 @@ export default class Blockchain {
   }
   */
 
-  minePendingTransactions(miningRewardAddress){
-    let block = new Block(Date.now(), this.pendingTransactions) // in reality miners choose the transaction they want to include 
+  minePendingTransactions(miningRewardAddress) {
+    let block = new Block(Date.now(), this.pendingTransactions); // in reality miners choose the transaction they want to include
     block.mineBlock(this.difficulty);
 
-    console.log("Block successfully mined!")
-    this.chain.push(block)
+
+    console.log("Block successfully mined!");
+    this.chain.push(block);
 
     //reset the pending ttransactions array
     this.pendingTransactions = [
-      new Transaction(null, miningRewardAddress, this.miningReward)
-    ]
+      // we create a new transaction that contains the mining rewards and address of the miner of the previous block
+      // this will send to the miner when the next block is mined
+      new Transaction(null, miningRewardAddress, this.miningReward),
+    ];
+  }
 
+  createTransaction(transaction) {
+   this.pendingTransactions.push(transaction);
+  }
+
+  getBalanceOfAddress(address) {
+    let balance = 0;
+
+    for (const block of this.chain) {
+      //looping over the blocks in the chain
+      for (const trans of block.transactions) {
+        //looping over the transactions in the chain
+        if (trans.fromAddress === address) {
+          //checking if it is the sender or the receiver
+          balance -= trans.amount;
+        }
+
+        if (trans.toAddress === address) {
+          //checking if it is the sender or the receiver
+          balance += trans.amount;
+        }
+      }
+    }
+
+    return balance;
   }
 
   //check for chain validity
