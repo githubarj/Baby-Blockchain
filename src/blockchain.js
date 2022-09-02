@@ -51,8 +51,22 @@ export default class Blockchain {
     ];
   }
 
-  createTransaction(transaction) {
-   this.pendingTransactions.push(transaction);
+  //receiving a transaction and adding it to the pending transactions
+  addTransaction(transaction) {
+
+    //first we do a couple of checks
+
+    //checking if to and from addresses are present
+    if(!transaction.fromAddress || !transaction.toAddress){
+      throw new Error('Transaction must include a to and from Address')
+    }
+
+    //checking if the transaction being added is valid
+    if (!transaction.isValid()){
+      throw new Error('Cannot add invalid transaction to chain')
+    }
+      // when both tests pass we can now push to pening transactions array
+      this.pendingTransactions.push(transaction);
   }
 
   getBalanceOfAddress(address) {
@@ -83,6 +97,7 @@ export default class Blockchain {
       const currentBlock = this.chain[i];
       const previousBlock = this.chain[i - 1];
 
+
       // first we check if the hash is correct
       if (currentBlock.hash != currentBlock.calculateHash()) {
         return "Invalid, Wrong Hash";
@@ -91,6 +106,11 @@ export default class Blockchain {
       //we check if it points to a correct previous hash
       if (currentBlock.previousHash != previousBlock.hash) {
         return "Invalid, Points to a wrong previous block";
+      }
+
+      //checking if all the blocks have all valid transactions in them
+      if(!currentBlock.hasValidTransactions()){
+        return "Invalid, some blocks have invalid tx"
       }
     }
 

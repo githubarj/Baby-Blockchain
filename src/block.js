@@ -1,7 +1,8 @@
 import SHA256 from "crypto-js/sha256.js";
+import Transaction from "./transaction";
 
 export default class Block {
-  constructor( timestamp, transactions, previousHash = "") {
+  constructor(timestamp, transactions, previousHash = "") {
     this.timestamp = timestamp;
     this.transactions = transactions;
     this.previousHash = previousHash;
@@ -12,7 +13,7 @@ export default class Block {
   //SHA 256 hashing to create a hash
   calculateHash() {
     return SHA256(
-        this.timestamp +
+      this.timestamp +
         JSON.stringify(this.transactions) +
         this.previousHash +
         this.nonce
@@ -29,5 +30,15 @@ export default class Block {
     }
 
     console.log(`Block Mined: ${this.hash}`);
+  }
+
+  // checking if all the transactions in each block are valid, false for not valid
+  hasValidTransactions() {
+    for (const tx of this.transactions) {
+      if (!tx.isValid()) {
+        return false;
+      }
+    }
+    return true;
   }
 }
