@@ -11,7 +11,7 @@ export default class Transaction {
 
   // we now calculate the hash of each transaction
   calculateHash() {
-    return SHA256(this.amount + this.fromAddress + this.toAddress);
+    return SHA256(this.amount + this.fromAddress + this.toAddress).toString();
   }
 
   // Now we sign a transaction

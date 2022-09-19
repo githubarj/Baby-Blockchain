@@ -1,4 +1,1 @@
-
-console.log(
-  `\n Balance of mining address is ${githuba.getBalanceOfAddress("myAddress")}`
-);
+const ec = new EC("secp256k1");
