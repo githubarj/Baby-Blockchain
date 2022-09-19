@@ -58,14 +58,14 @@ export default class Blockchain {
 
     //checking if to and from addresses are present
     if(!transaction.fromAddress || !transaction.toAddress){
-      throw new Error('Transaction must include a to and from Address')
+      throw new Error('Transaction must include and to and from Address')
     }
 
     //checking if the transaction being added is valid
     if (!transaction.isValid()){
       throw new Error('Cannot add invalid transaction to chain')
     }
-      // when both tests pass we can now push to pening transactions array
+      // when both tests pass we can now push to pending transactions array
       this.pendingTransactions.push(transaction);
   }
 

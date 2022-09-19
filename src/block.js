@@ -1,5 +1,5 @@
 import SHA256 from "crypto-js/sha256.js";
-import Transaction from "./transaction";
+import Transaction from "./transaction.js";
 
 export default class Block {
   constructor(timestamp, transactions, previousHash = "") {

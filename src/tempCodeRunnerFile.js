@@ -1,1 +1,0 @@
-const ec = new EC("secp256k1");
