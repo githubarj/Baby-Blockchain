@@ -22,12 +22,62 @@ It is an implementation of my own minimal version of the blockchain (without dec
  - A blockchain 
  - Hashing
  - Transactions and transaction creation
- - Accounts
- - Signatures
- - Front end for interaction
+ - Sign transactions
+ - Simple proof-of-work algorithm
+ - Verify blockchain (to prevent tampering)
+ - Generate wallet (private/public key)
+
 
  ## Interaction
- This will be updated as I continue to work on the project. 
+## 🏁 Getting Started <a name = "getting_started"></a>
+
+### Install dependencies
+```
+yarn
+```
+Replace what is in main.js with the following...
+
+### Generate a keypair
+To make transactions on this blockchain you need a keypair. The public key becomes your wallet address and the private key is used to sign transactions.
+
+```js
+import EC from "elliptic/lib/elliptic/ec/index.js";
+const ec = new EC("secp256k1");
+
+const myKey = ec.genKeyPair();
+```
+
+The `myKey` object now contains your public & private key:
+
+```js
+console.log('Public key:', myKey.getPublic('hex'));
+console.log('Private key:', myKey.getPrivate('hex'));
+```
+
+### Create a blockchain instance
+Now you can create a new instance of a Blockchain:
+
+```js
+import Blockchain from "./blockchain.js";
+import Transaction from "./transaction.js"
+
+const myChain = new Blockchain();
+```
+
+### Adding transactions
+```js
+// Transfer 100 coins from my wallet to "toAddress"
+const tx = new Transaction(myKey.getPublic('hex'), 'toAddress', 100);
+tx.signTransaction(myKey);
+
+myChain.addTransaction(tx);
+```
+
+To finalize this transaction, we have to mine a new block. We give this method our wallet address because we will receive a mining reward:
+
+```js
+myChain.minePendingTransactions(myKey.getPublic('hex'));
+```
 
 
 
